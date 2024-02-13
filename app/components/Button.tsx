@@ -6,7 +6,7 @@ import { IconType } from "react-icons";
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string;
   onClick: (e: MouseEvent<HTMLButtonElement>) => void;
-  disabled: boolean;
+  disabled?: boolean;
   outline?: boolean;
   small?: boolean;
   icon?: IconType;
