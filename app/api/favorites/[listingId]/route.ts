@@ -33,7 +33,7 @@ export async function POST(request: Request, { params }: { params: IParams }) {
     }
   })
 
-  NextResponse.json(user)
+  return NextResponse.json(user)
 }
 
 export async function DELETE(request: Request, { params }: { params: IParams }) {
@@ -62,5 +62,5 @@ export async function DELETE(request: Request, { params }: { params: IParams }) 
     }
   })
 
-  NextResponse.json(user)
+  return NextResponse.json(user)
 }

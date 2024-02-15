@@ -11,15 +11,16 @@ import useRegisterModal from "@/app/hooks/useRegisterModal";
 import useLoginModal from "@/app/hooks/useLoginModal";
 import { User } from "@prisma/client";
 import useRentModal from "@/app/hooks/useRentModal";
+import Link from "next/link";
 
 interface UserMenuProps {
-  currentUser?: User| null;
+  currentUser?: User | null;
 }
 
 export default function UserMenu({ currentUser }: UserMenuProps) {
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
-  const rentModal = useRentModal()
+  const rentModal = useRentModal();
   const [isOpen, setIsopen] = useState(false);
 
   const toggleOpen = useCallback(() => {
@@ -31,9 +32,8 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
       return loginModal.onOpen();
     }
 
-    rentModal.onOpen()
-    
-  }, [currentUser, loginModal, rentModal])
+    rentModal.onOpen();
+  }, [currentUser, loginModal, rentModal]);
 
   return (
     <div className="relative">
@@ -60,7 +60,13 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
           <div className="flex flex-col cursor-pointer">
             {currentUser ? (
               <>
-                <MenuItem onClick={() => {}} label="My trips" />
+                {/* <MenuItem onClick={() => {}} label="My trips" /> */}
+                <Link
+                  href={"/trips"}
+                  className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                >
+                  My trips
+                </Link>
                 <MenuItem onClick={() => {}} label="My reservations" />
                 <MenuItem onClick={() => {}} label="My favorites" />
                 <MenuItem onClick={() => {}} label="My properties" />
