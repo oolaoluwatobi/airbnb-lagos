@@ -7,6 +7,7 @@ import ToasterProvider from "./providers/ToasterProvider";
 import LoginModal from "./components/modals/LoginModal";
 import getCurrentUser from "./actions/getCurrentUser";
 import RentModal from "./components/modals/RentModal";
+import { Suspense } from "react";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -20,9 +21,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const currentUser = await getCurrentUser();
 
-  const currentUser = await getCurrentUser()
-  
   return (
     <html lang="en">
       <body className={`${nunito.className} `}>
@@ -30,12 +30,16 @@ export default async function RootLayout({
           <ToasterProvider />
           <RentModal />
           <LoginModal />
-          <RegisterModal  />
-          <Navbar currentUser={currentUser} />
+          <RegisterModal />
+          <Suspense
+            fallback={
+              <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-slate-600" />
+            }
+          >
+            <Navbar currentUser={currentUser} />
+          </Suspense>
         </>
-        <div className="pb-20 pt-28">
-          {children}
-        </div>
+        <div className="pb-20 pt-28">{children}</div>
       </body>
     </html>
   );
