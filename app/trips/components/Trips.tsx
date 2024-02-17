@@ -6,7 +6,7 @@ import ListingCard from '@/app/components/listings/ListingCard';
 import { Listing, Reservation, User } from '@prisma/client'
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
-import React, { FC, useCallback } from 'react'
+import React, { FC, useCallback, useEffect } from 'react'
 import toast from 'react-hot-toast';
 
 interface ITripsProps {
@@ -31,12 +31,16 @@ const Trips: FC<ITripsProps> = ({
       .catch((error) => {
         console.log(error)
         toast.error(error?.response?.data?.message || error?.response?.data?.error || 'Something went wrong')
-        router.refresh()
       })
       .finally(() => {
         setDeletingId(null)
-      })
+        router.refresh()
+      })  
     
+  }, [router])
+
+  useEffect(() => {
+    router.refresh()
   }, [router])
   
   return (

@@ -67,7 +67,13 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
                 >
                   My trips
                 </Link>
-                <MenuItem onClick={() => {}} label="My reservations" />
+                <Link
+                  href={"/reservations"}
+                  className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                >
+                  My reservations
+                </Link>
+                {/* <MenuItem onClick={() => {}} label="My reservations" /> */}
                 <MenuItem onClick={() => {}} label="My favorites" />
                 <MenuItem onClick={() => {}} label="My properties" />
                 <MenuItem onClick={rentModal.onOpen} label="Airbnb my home" />
