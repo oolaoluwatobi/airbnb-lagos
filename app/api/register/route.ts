@@ -10,6 +10,14 @@ export async function POST(request: Request) {
   const hashedPassword = await bcrypt.hash(password, 12)
   console.log(email, name, hashedPassword)
   
+    // Check if the email is already taken
+    const existingUser = await prisma.user.findUnique({ where: { email } });
+    if (existingUser) {
+      // return res.status(409).json({ message: 'Email has already been taken' });
+      // If the condition is met, return a response with a 409 status code
+      return NextResponse.json({ message: 'Email has already been taken' }, { status: 409 });
+    }
+  
   try {
     
     const user = await prisma.user.create({

@@ -8,7 +8,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 interface ICalenderProps {
   value: Range;
   onChange: (value: RangeKeyDict ) => void;
-  disabledDates: Date[];
+  disabledDates?: Date[];
 }
 
 const Calender = ({

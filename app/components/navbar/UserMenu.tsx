@@ -61,6 +61,9 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
             {currentUser ? (
               <>
                 {/* <MenuItem onClick={() => {}} label="My trips" /> */}
+                {/* <MenuItem onClick={() => {}} label="My reservations" /> */}
+                {/* <MenuItem onClick={() => {}} label="My favorites" /> */}
+                {/* <MenuItem onClick={() => {}} label="My properties" /> */}
                 <Link
                   href={"/trips"}
                   className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
@@ -68,14 +71,23 @@ export default function UserMenu({ currentUser }: UserMenuProps) {
                   My trips
                 </Link>
                 <Link
-                  href={"/reservations"}
+                  href={"/reservations  "}
                   className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
                 >
                   My reservations
                 </Link>
-                {/* <MenuItem onClick={() => {}} label="My reservations" /> */}
-                <MenuItem onClick={() => {}} label="My favorites" />
-                <MenuItem onClick={() => {}} label="My properties" />
+                <Link
+                  href={"/favorites  "}
+                  className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                >
+                  My favorites
+                </Link>
+                <Link
+                  href={"/properties  "}
+                  className="px-4 py-3 hover:bg-neutral-100 transition font-semibold"
+                >
+                  My properties
+                </Link>
                 <MenuItem onClick={rentModal.onOpen} label="Airbnb my home" />
                 <hr />
                 <MenuItem onClick={() => signOut()} label="Logout" />
