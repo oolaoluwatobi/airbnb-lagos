@@ -1,9 +1,10 @@
-'use client'
+"use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
-import React, { useCallback } from "react";
+import { useSearchParams } from "next/navigation";
+import React from "react";
 import { IconType } from "react-icons";
 import qs from "query-string";
+import Link from "next/link";
 
 interface CategoryBoxProps {
   icon: IconType;
@@ -12,39 +13,42 @@ interface CategoryBoxProps {
 }
 
 const CategoryBox = ({ label, icon: Icon, selected }: CategoryBoxProps) => {
-  const router = useRouter();
   const params = useSearchParams();
 
-  const handleClick = useCallback(() => {
-    let currentQuery = {};
+  let currentQuery = {};
 
-    if (params) {
-      currentQuery = qs.parse(params.toString());
-    }
+  if (params) {
+    currentQuery = qs.parse(params.toString());
+  }
 
-    const updatedQuery: any = {
-      ...currentQuery,
-      category: label,
-    };
+  const updatedQuery: any = {
+    ...currentQuery,
+    category: label,
+  };
 
-    if (params?.get("category") === label) {
-      delete updatedQuery.category;
-    }
+  if (params?.get("category") === label) {
+    delete updatedQuery.category;
+  }
 
-    const url = qs.stringifyUrl(
-      {
-        url: "/",
-        query: updatedQuery,
-      },
-      { skipNull: true }
-    );
+  const url = qs.stringifyUrl(
+    {
+      url: "/",
+      query: updatedQuery,
+    },
+    { skipNull: true }
+  );
 
-    router.push(url);
-  }, [label, params, router]);
+  console.log(url, "URL____");
+
+  // const handleClick = useCallback(() => {
+
+  //   router.push(url);
+  // }, [label, params, router]);
 
   return (
-    <div
-      onClick={handleClick}
+    <Link
+      href={url}
+      // onClick={handleClick}
       className={`flex flex-col items-center justify-center gap-2 p-3 border-b-2  hover:text-neutral-800 transition cursor-pointer ${
         selected
           ? "border-b-neutral-800 text-neutral-800"
@@ -53,7 +57,7 @@ const CategoryBox = ({ label, icon: Icon, selected }: CategoryBoxProps) => {
     >
       <Icon size={26} />
       <p className="font-medium text-sm">{label}</p>
-    </div>
+    </Link>
   );
 };
 
