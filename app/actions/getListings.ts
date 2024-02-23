@@ -1,4 +1,4 @@
-import prisma from '@/app/libs/prismadb'
+import prisma from "@/app/libs/prismadb";
 
 export interface IListingsParams {
   userId?: string;
@@ -13,7 +13,7 @@ export interface IListingsParams {
 
 export default async function getListings(params: IListingsParams) {
   try {
-    const { 
+    const {
       userId,
       guestCount,
       roomCount,
@@ -21,53 +21,42 @@ export default async function getListings(params: IListingsParams) {
       startDate,
       endDate,
       locationValue,
-      category 
+      category,
     } = params;
 
-    let query: any = {}
-    
+    let query: any = {};
+
     if (userId) {
-      query.userId = userId 
+      query.userId = userId;
     }
-    
+
     if (category) {
-      query.category = category
+      query.category = category;
     }
-    
+
     if (guestCount) {
       query.guestCount = {
-        gte: +guestCount
-      }
+        gte: +guestCount,
+      };
     }
 
     if (roomCount) {
       query.roomCount = {
-        gte: +roomCount
-      }
+        gte: +roomCount,
+      };
     }
 
     if (bathroomCount) {
       query.bathroomCount = {
-        gte: +bathroomCount
-      }
+        gte: +bathroomCount,
+      };
     }
-    
+
     if (locationValue) {
       query.locationValue = {
-        contains: locationValue
-      }
+        contains: locationValue,
+      };
     }
-    
-    // if (startDate && endDate) {
-    //   query.AND = {
-    //     startDate: {
-    //       gte: new Date(startDate)
-    //     },
-    //     endDate: {
-    //       lte: new Date(endDate)
-    //     }
-    //   }
-    // }
 
     if (startDate && endDate) {
       query.NOT = {
@@ -75,30 +64,30 @@ export default async function getListings(params: IListingsParams) {
           some: {
             OR: [
               {
-                endDate:{ gte: startDate },
-                startDate:{ lte: startDate }
+                endDate: { gte: startDate },
+                startDate: { lte: startDate },
               },
               {
-                startDate:{ lte: endDate },
-                endDate:{ gte: endDate }
-              }
-            ]
-          }
-        }
-      }
+                startDate: { lte: endDate },
+                endDate: { gte: endDate },
+              },
+            ],
+          },
+        },
+      };
     }
-  
-    console.log('query', query)
-    
+
+    console.log("query", query);
+    console.log("queryDate", startDate, endDate);
+
     const listings = await prisma.listing.findMany({
       where: query,
       orderBy: {
-        createdAt: 'desc'
-      }
-    })
-    return listings
+        createdAt: "desc",
+      },
+    });
+    return listings;
   } catch (error: any) {
-    throw new Error(error)
+    throw new Error(error);
   }
-  
 }

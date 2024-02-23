@@ -7,6 +7,11 @@ import bcrypt from "bcrypt";
 
 import prisma from "@/app/libs/prismadb";
 
+
+// import { User, getServerSession } from "next-auth";
+import { User } from "@prisma/client";
+// import User from 'next-auth'
+
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -53,6 +58,20 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user, trigger, session }) {
+      if (trigger === "update") {
+        return { ...token, ...session.user };
+      } else {
+        return { ...token, ...user };
+      }
+    },
+    async session({ session, token, user }) {
+      session.user = token as any;
+      return session;
+    },
+    
+  },
   pages: {
     signIn: "/",
   },

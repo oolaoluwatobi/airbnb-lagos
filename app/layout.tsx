@@ -10,6 +10,10 @@ import RentModal from "./components/modals/RentModal";
 import { Suspense } from "react";
 import SearchModal from "./components/modals/SearchModal";
 
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+import Provider from "@/utils/Provider";
+
 const nunito = Nunito({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -41,7 +45,9 @@ export default async function RootLayout({
             <Navbar currentUser={currentUser} />
           </Suspense>
         </>
-        <div className="pb-20 pt-28">{children}</div>
+        <Provider>
+          <div className="pb-20 pt-28">{children}</div>
+        </Provider>
       </body>
     </html>
   );
