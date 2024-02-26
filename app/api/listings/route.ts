@@ -3,9 +3,13 @@ import { type NextRequest } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getListings from "@/app/actions/getListings";
+import { getServerSession } from "next-auth";
+import getUser from "@/app/actions/getUser";
 
 export async function POST(request: Request) {
-  const currentUser = await getCurrentUser();
+  // const currentUser = await getCurrentUser();
+  const session = await getServerSession();
+  const currentUser = await getUser({ userEmail: session?.user?.email });
 
   if (!currentUser) {
     return NextResponse.error();

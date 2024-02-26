@@ -5,6 +5,8 @@ import Container from "./components/Container";
 import EmptyState from "./components/EmptyState";
 import ListingCard from "./components/listings/ListingCard";
 import { unstable_noStore } from "next/cache";
+import { getServerSession } from "next-auth";
+import getUser from "./actions/getUser";
 
 interface HomeProps {
   // searchParams: { [key: string]: string | string[] | undefined };
@@ -12,6 +14,10 @@ interface HomeProps {
 }
 
 export default async function Home({ searchParams }: HomeProps) {
+  // const currentUser = await getCurrentUser();
+  const session = await getServerSession();
+  const currentUser = await getUser({ userEmail: session?.user?.email });
+
   unstable_noStore();
   let query = {};
   const category =
@@ -46,7 +52,6 @@ export default async function Home({ searchParams }: HomeProps) {
   };
 
   const listings = await getListings(query);
-  const currentUser = await getCurrentUser();
 
   console.log(listings, "LISTINGS____");
   console.log(searchParams, category, "searchparams____");

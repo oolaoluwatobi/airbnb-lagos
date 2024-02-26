@@ -4,9 +4,13 @@ import getCurrentUser from "../actions/getCurrentUser";
 import getReservations from "../actions/getReservations";
 import Trips from "./components/Trips";
 import { Suspense } from "react";
+import { getServerSession } from "next-auth";
+import getUser from "../actions/getUser";
 
 const TripsPage = async () => {
-  const currentUser = await getCurrentUser();
+  // const currentUser = await getCurrentUser();
+  const session = await getServerSession();
+  const currentUser = await getUser({ userEmail: session?.user?.email });
 
   if (!currentUser) {
     return <EmptyState title="Unauthorized" subtitle="Please login" />;

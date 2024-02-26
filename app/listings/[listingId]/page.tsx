@@ -1,26 +1,27 @@
-import EmptyState from '@/app/components/EmptyState'
+import EmptyState from "@/app/components/EmptyState";
 
-import getCurrentUser from '@/app/actions/getCurrentUser'
-import getListingById from '@/app/actions/getListingById'
-import Listing from './components/Listing'
-import getReservations from '@/app/actions/getReservations'
+import getCurrentUser from "@/app/actions/getCurrentUser";
+import getListingById from "@/app/actions/getListingById";
+import Listing from "./components/Listing";
+import getReservations from "@/app/actions/getReservations";
+import { getServerSession } from "next-auth";
+import getUser from "@/app/actions/getUser";
 
 interface IParams {
-  listingId: string
+  listingId: string;
 }
 
-const ListingsPage = async ({ params}: { params: IParams }) => {
-  const listing = await getListingById(params)
-  const reservations = await getReservations(params)
-  const currentUser = await getCurrentUser()
-  
-  if (!listing) {
+const ListingsPage = async ({ params }: { params: IParams }) => {
+  const listing = await getListingById(params);
+  const reservations = await getReservations(params);
+  // const currentUser = await getCurrentUser();
+  const session = await getServerSession();
+  const currentUser = await getUser({ userEmail: session?.user?.email });
 
-    return (
-      <EmptyState />
-    )
+  if (!listing) {
+    return <EmptyState />;
   }
-  
+
   return (
     <div>
       <Listing
@@ -29,7 +30,7 @@ const ListingsPage = async ({ params}: { params: IParams }) => {
         reservations={reservations}
       />
     </div>
-  )
-}
+  );
+};
 
-export default ListingsPage
+export default ListingsPage;

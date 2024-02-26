@@ -9,6 +9,8 @@ import getCurrentUser from "./actions/getCurrentUser";
 import RentModal from "./components/modals/RentModal";
 import { Suspense } from "react";
 import SearchModal from "./components/modals/SearchModal";
+import { getServerSession } from "next-auth";
+import getUser from "./actions/getUser";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -22,7 +24,9 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const currentUser = await getCurrentUser();
+  // const currentUser = await getCurrentUser();
+  const session = await getServerSession();
+  const currentUser = await getUser({ userEmail: session?.user?.email });
 
   return (
     <html lang="en">
