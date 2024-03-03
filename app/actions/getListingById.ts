@@ -1,14 +1,14 @@
-import prisma from '@/app/libs/prismadb'
+import prisma from "@/app/libs/prismadb";
 
 interface IParams {
   listingId?: string;
 }
 
-const getListingById = async (params: IParams) => {
-  const { listingId } = params;
-  
+const getListingById = async (listingId: string | null) => {
+  // const { listingId } = params;
+
   if (!listingId) {
-    throw new Error('Listing ID is required');
+    throw new Error("Listing ID is required");
   }
 
   const listing = await prisma.listing.findUnique({
@@ -17,14 +17,14 @@ const getListingById = async (params: IParams) => {
     },
     include: {
       user: true,
-    }
+    },
   });
 
   if (!listing) {
-    return null
+    return null;
   }
-  
+
   return listing;
 };
 
-export default getListingById;  
+export default getListingById;
