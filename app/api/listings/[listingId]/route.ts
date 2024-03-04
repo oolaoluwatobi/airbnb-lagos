@@ -13,7 +13,7 @@ interface IParams {
 export async function GET(request: Request, { params }: { params: IParams }) {
   const { searchParams } = new URL(request.url);
   const listingId = params.listingId;
-  const id = searchParams.get("id");
+  const email = searchParams.get("email");
 
   // console.log(params, "PARAMS_____");
 
@@ -21,16 +21,17 @@ export async function GET(request: Request, { params }: { params: IParams }) {
     return new Response("Invalid request", { status: 400 });
   }
 
-  if (!id || typeof id !== "string") {
-    throw new Error(`Missing parameter 'id'`);
+  if (!email || typeof email !== "string") {
+    return new Response("Missing parameter email", { status: 401 });
   }
 
   try {
     const res = await getListingById(listingId);
+    const currentUser = await getUser({ userEmail: email });
 
     if (res) {
       const listing = await res;
-      return Response.json({ listing });
+      return Response.json({ listing, currentUser });
     }
   } catch (error) {
     console.error(error);

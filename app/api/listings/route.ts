@@ -56,34 +56,38 @@ export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
   let query = {};
 
-  const category = searchParams.get("category");
-  const roomCount = searchParams.get("roomCount");
-  const bathroomCount = searchParams.get("bathroomCount");
-  const guestCount = searchParams.get("guestCount");
-  const startDate = searchParams.get("startDate");
-  const endDate = searchParams.get("endDate");
-  const locationValue = searchParams.get("locationValue");
-
-  // const category =
-  //   typeof searchParams.category === "string" ? searchParams.category : null;
-  // const roomCount =
-  //   typeof searchParams.roomCount === "string" ? searchParams.roomCount : null;
-  // const bathroomCount =
-  //   typeof searchParams.bathroomCount === "string"
-  //     ? searchParams.bathroomCount
-  //     : null;
-  // const guestCount =
-  //   typeof searchParams.guestCount === "string"
-  //     ? searchParams.guestCount
-  //     : null;
-  // const startDate =
-  //   typeof searchParams.startDate === "string" ? searchParams.startDate : null;
-  // const endDate =
-  //   typeof searchParams.endDate === "string" ? searchParams.endDate : null;
-  // const locationValue =
-  //   typeof searchParams.locationValue === "string"
-  //     ? searchParams.locationValue
-  //     : null;
+  const category =
+    typeof searchParams.get("category") === "string"
+      ? searchParams.get("category")
+      : null;
+  const roomCount =
+    typeof searchParams.get("roomCount") === "string"
+      ? searchParams.get("roomCount")
+      : null;
+  const bathroomCount =
+    typeof searchParams.get("bathroomCount") === "string"
+      ? searchParams.get("bathroomCount")
+      : null;
+  const guestCount =
+    typeof searchParams.get("guestCount") === "string"
+      ? searchParams.get("guestCount")
+      : null;
+  const startDate =
+    typeof searchParams.get("startDate") === "string"
+      ? searchParams.get("startDate")
+      : null;
+  const endDate =
+    typeof searchParams.get("endDate") === "string"
+      ? searchParams.get("endDate")
+      : null;
+  const locationValue =
+    typeof searchParams.get("locationValue") === "string"
+      ? searchParams.get("locationValue")
+      : null;
+  const email =
+    typeof searchParams.get("email") === "string"
+      ? searchParams.get("email")
+      : null;
 
   query = {
     category,
@@ -95,7 +99,8 @@ export async function GET(request: NextRequest) {
     locationValue,
   };
 
+  const currentUser = await getUser({ userEmail: email });
   const listings = await getListings(query);
 
-  return NextResponse.json(listings);
+  return NextResponse.json({ listings, currentUser });
 }
