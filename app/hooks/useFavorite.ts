@@ -38,15 +38,16 @@ const useFavorite = ({ listingId, currentUser }: IUserFavorite) => {
 
       try {
         if (hasFavorited) {
-          await axios.delete(`/api/favorites/${listingId}`, {
-            data: currentUser,
-          });
+          const req = await axios.delete(
+            `/api/favorites/${listingId}/user/${currentUser.id}`
+          );
+          // console.log(req, "REQ______useFAVORITE/del/tsx49");
           toast.success("removed from favorites");
         } else {
           const req = await axios.post(`/api/favorites/${listingId}`, {
             data: currentUser,
           });
-          console.log(req, "REQ______useFAVORITEtsx49");
+          // console.log(req, "REQ______useFAVORITEtsx49");
           toast.success("added to favorites");
         }
 
