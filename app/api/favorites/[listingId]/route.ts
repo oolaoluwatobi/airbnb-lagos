@@ -11,16 +11,15 @@ interface IParams {
   listingId?: string;
 }
 
-interface IReq {
-  req: User;
-}
-
 export async function POST(request: Request, { params }: { params: IParams }) {
-  const currentUser: User = await request.json();
+  const { data } = await request.json();
+  const currentUser = data;
+
+  console.log(data, currentUser?.id, "currentUser______favorite/routes.ts");
 
   const { listingId } = params;
 
-  if (!currentUser.id) {
+  if (!currentUser?.id) {
     return new Response("Missing parameter currentUserId", { status: 401 });
   }
 

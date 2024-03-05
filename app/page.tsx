@@ -53,8 +53,8 @@ export default async function Home({ searchParams }: HomeProps) {
 
   const listings = await getListings(query);
 
-  console.log(listings, "LISTINGS____");
-  console.log(searchParams, category, "searchparams____");
+  // console.log(listings, "LISTINGS____");
+  // console.log(searchParams, category, "searchparams____");
 
   if (listings.length === 0) {
     return (
