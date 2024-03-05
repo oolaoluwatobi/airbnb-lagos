@@ -38,7 +38,7 @@ const CategoryBox = ({ label, icon: Icon, selected }: CategoryBoxProps) => {
     { skipNull: true }
   );
 
-  console.log(url, "URL____");
+  // console.log(url, "URL____");
 
   // const handleClick = useCallback(() => {
 
