@@ -48,8 +48,8 @@ export async function DELETE(
   request: Request,
   { params }: { params: IParams }
 ) {
-  // const currentUser = await getCurrentUser();
-  const currentUser: User = await request.json();
+  const { data } = await request.json();
+  const currentUser = data;
 
   if (!currentUser) {
     return NextResponse.error();
