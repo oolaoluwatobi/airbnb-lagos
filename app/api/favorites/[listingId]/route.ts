@@ -41,15 +41,10 @@ export async function POST(request: Request, { params }: { params: IParams }) {
   });
 
   return NextResponse.json(user);
-  return Response.json(currentUser);
 }
 
-export async function DELETE(
-  request: Request,
-  { params }: { params: IParams },
-  searchParams: any
-) {
-  console.log(params, searchParams, "DELETE______favorite/routes.ts");
+export async function PUT(request: Request, { params }: { params: IParams }) {
+  console.log(params, "PUT______favorite/routes.ts");
   const { data } = await request.json();
   const currentUser = data;
 
@@ -76,6 +71,6 @@ export async function DELETE(
     },
   });
 
-  console.log(data, listingId, "currentUser______favorite/del/routes.ts");
+  console.log(data, listingId, "currentUser______favorite/put/routes.ts");
   return NextResponse.json(user);
 }
