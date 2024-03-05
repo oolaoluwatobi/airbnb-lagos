@@ -51,14 +51,14 @@ export async function DELETE(
   const { data } = await request.json();
   const currentUser = data;
 
-  if (!currentUser) {
-    return NextResponse.error();
-  }
-
   const { listingId } = params;
 
+  if (!currentUser?.id) {
+    return new Response("Missing parameter currentUserId", { status: 401 });
+  }
+
   if (!listingId || typeof listingId !== "string") {
-    throw new Error("Invalid ID");
+    return new Response("Missing parameter listingId", { status: 400 });
   }
 
   let favoriteIds = [...(currentUser.favoriteIds || [])];
