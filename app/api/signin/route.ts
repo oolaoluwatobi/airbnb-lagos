@@ -20,7 +20,7 @@ export async function POST(request: Request) {
   const { email, password } = body;
 
   if (!email || !password) {
-    throw new Error("Invalid credentials");
+    return new Response("Invalid credentials", { status: 401 });
   }
 
   const user = await prisma.user.findUnique({
@@ -36,8 +36,9 @@ export async function POST(request: Request) {
   const isCorrectPassword = await bcrypt.compare(password, user.hashedPassword);
 
   if (!isCorrectPassword) {
-    throw new Error("Invalid credentials");
+    return new Response("Invalid credentialz", { status: 401 });
   }
 
-  return NextResponse.json(user);
+  const { hashedPassword, ...userWithoutPassword } = user;
+  return NextResponse.json(userWithoutPassword);
 }

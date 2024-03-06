@@ -76,14 +76,9 @@ export async function PUT(request: Request, { params }: { params: IParams }) {
   return NextResponse.json(user);
 }
 
-export async function OPTIONS(
-  request: Request,
-  { params }: { params: IParams }
-) {
+export async function OPTIONS(request: Request) {
   const { data } = await request.json();
   const currentUser = data;
-
-  const { listingId } = params;
 
   const favoriteListings = await getFavoriteListings(currentUser);
 

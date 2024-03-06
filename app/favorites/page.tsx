@@ -5,12 +5,20 @@ import getCurrentUser from "../actions/getCurrentUser";
 import Favorites from "./components/Favorites";
 import { getServerSession } from "next-auth";
 import getUser from "../actions/getUser";
+import useLoginModal from "../hooks/useLoginModal";
 
 const FavoritesPage = async () => {
-  const listings = await getFavoriteListings();
   // const currentUser = await getCurrentUser();
+  const loginModal = useLoginModal();
   const session = await getServerSession();
   const currentUser = await getUser({ userEmail: session?.user?.email });
+
+  if (!currentUser) {
+    loginModal.onOpen();
+    return;
+  }
+
+  const listings = await getFavoriteListings(currentUser);
 
   if (listings.length === 0) {
     return (

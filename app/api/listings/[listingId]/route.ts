@@ -30,7 +30,7 @@ export async function GET(request: Request, { params }: { params: IParams }) {
     const currentUser = await getUser({ userEmail: email });
 
     if (res) {
-      const listing = await res;
+      const listing = res;
       return Response.json({ listing, currentUser });
     }
   } catch (error) {
