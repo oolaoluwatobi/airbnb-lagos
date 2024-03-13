@@ -11,6 +11,8 @@ declare global {
   var cloudinary: any;
 }
 
+const uploadPresent = "ibaloglp";
+
 interface ImageUploadProps {
   onChange: (value: string) => void;
   value: string;
@@ -24,12 +26,12 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
     [onChange]
   );
 
-  console.log(value, 'IMAGE___DATA');
-  
+  console.log(value, "IMAGE___DATA");
+
   return (
     <CldUploadWidget
       onUpload={handleUpload}
-      uploadPreset="ibaloglp"
+      uploadPreset={uploadPresent}
       options={{
         maxFiles: 1,
       }}
@@ -45,18 +47,18 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
             {value && (
               <div className="absolute inset-0 w-full h-full ">
                 <Image
-                  className="object-cover w-full h-full  "  
+                  className="object-cover w-full h-full  "
                   src={value}
                   alt="upload"
                   height={0}
                   width={0}
                   sizes="100vw"
                   priority
-                 />
+                />
               </div>
             )}
           </div>
-        )
+        );
       }}
     </CldUploadWidget>
   );
