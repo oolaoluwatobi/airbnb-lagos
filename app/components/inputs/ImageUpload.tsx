@@ -26,7 +26,7 @@ const ImageUpload: FC<ImageUploadProps> = ({ onChange, value }) => {
     [onChange]
   );
 
-  console.log(value, "IMAGE___DATA");
+  console.log(value, "IMAGE___DATA 29");
 
   return (
     <CldUploadWidget
