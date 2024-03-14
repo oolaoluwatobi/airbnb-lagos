@@ -39,7 +39,7 @@ export async function GET(request: Request) {
 }
 
 export async function OPTIONS(request: Request) {
-  console.log("OPTIONS...");
+  // console.log("OPTIONS...");
   const { data } = await request.json();
   const email = data;
   try {
